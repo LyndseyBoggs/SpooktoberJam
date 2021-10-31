@@ -6,8 +6,9 @@ public class GameManager : MonoBehaviour
 {
     //Singleton instance.
     public static GameManager instance;
-    
-    // TODO: Reference to the player.
+
+    // Reference to the player.
+    public GameObject Player;
 
     // Score.
     [SerializeField] float score;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int CATS_TOTAL { get; private set; }
 
+    public GameObject CatPrefab;
+
     private void Awake()
     {
         //Set and handle Singleton for Game Manager. Destroy duplicates.
@@ -41,26 +44,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void AddToCatsRescued()
     {
         CatsRescued++;
     }
 
-    public void SacrificeCat()
+    public void SacrificeThrowCat()
     {
         CatsRescued--;
+        CatsSacrificed++;
+        UIManager.instance.UpdateCatCounter(0.0f);
+        GameObject cat = Instantiate(CatPrefab, Player.transform.position, Quaternion.Inverse(Player.transform.rotation));
+        cat.GetComponent<Rigidbody2D>().AddForce(new Vector2(2f, 2f));
+    }
+
+    public void SacrificeWildCat()
+    {
         CatsSacrificed++;
     }
 
@@ -71,6 +70,4 @@ public class GameManager : MonoBehaviour
     {
         CATS_TOTAL++;
     }
-
-    
 }

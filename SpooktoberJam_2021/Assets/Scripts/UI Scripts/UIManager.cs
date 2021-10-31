@@ -9,10 +9,15 @@ public class UIManager : MonoBehaviour
     //Singletone UIManager.
     public static UIManager instance;
 
-    //Reference to cat counter text.
-    [SerializeField] private TextMeshProUGUI catCountText;
+    //Reference to cat rescue text.
+    [SerializeField] private TextMeshProUGUI catRescueText;
     //Store Designer-set values for cat counter text.
-    private string catCountTextPreAppend;
+    private string catRescueTextPreAppend;
+    //Reference to cat sacrifice text.
+    [SerializeField] private TextMeshProUGUI catSacrificeText;
+    //Store Designer-set values for cat counter text.
+    private string catSacrificeTextPreAppend;
+
 
     private void Awake()
     {
@@ -30,8 +35,9 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //Store Designer-set values for cat counter text and set start values.
-        catCountTextPreAppend = catCountText.text;
+        //Store Designer-set values for cat counter text and set start values in the next frame.
+        catRescueTextPreAppend = catRescueText.text;
+        catSacrificeTextPreAppend = catSacrificeText.text;
         StartCoroutine(DoUpdateCatCounter(Time.deltaTime)); 
     }
 
@@ -44,7 +50,8 @@ public class UIManager : MonoBehaviour
         }        
 
         //Update cat counter.
-        catCountText.text = catCountTextPreAppend + $"{GameManager.instance.CatsRescued}";
+        catRescueText.text = catRescueTextPreAppend + $"{GameManager.instance.CatsRescued}";
+        catSacrificeText.text = catSacrificeTextPreAppend + $"{GameManager.instance.CatsSacrificed}";
         yield return null;
     }
 

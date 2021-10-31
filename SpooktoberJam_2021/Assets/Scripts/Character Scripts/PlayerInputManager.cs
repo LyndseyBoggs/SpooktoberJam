@@ -66,5 +66,10 @@ public class PlayerInputManager : MonoBehaviour
         // Check to see if we're grounded or not.
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius);
 
+        // If we have cats and attempt to throw one, throw it
+        if (Input.GetKeyDown(KeyCode.E) && GameManager.instance.CatsRescued > 0)
+        {
+            GameManager.instance.SacrificeThrowCat();
+        }
     }
 }
